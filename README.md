@@ -8,7 +8,7 @@ Este repositorio contiene todo lo necesario para desplegar un agente **OpenClaw 
 
    ```bash
    git clone https://github.com/AIGenMarce/linuxplusopenclaw.git
-   cd openclaw-secure
+   cd linuxplusopenclaw
    ```
 
 2. Ejecuta el instalador:

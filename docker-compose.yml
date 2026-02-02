@@ -5,6 +5,13 @@ services:
     image: node:22-slim
     container_name: openclaw-agent
     restart: unless-stopped
+
+    # Resource limits to prevent DoS
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
     user: "1000:1000"
     working_dir: /app
 
