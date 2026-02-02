@@ -7,7 +7,7 @@ Este repositorio contiene todo lo necesario para desplegar un agente **OpenClaw 
 1. Clona este repositorio en tu VPS:
 
    ```bash
-   git clone https://github.com/TUUSUARIO/openclaw-secure.git
+   git clone https://github.com/AIGenMarce/linuxplusopenclaw.git
    cd openclaw-secure
    ```
 
@@ -22,6 +22,20 @@ El script te pedirá:
 
 - Tu **OpenRouter API Key** (Obligatorio)
 - Tu **Google Gemini API Key** (Opcional)
+
+## ☁️ Opción 2: Cloud-Init (Zero Touch)
+
+Si estás creando un nuevo VPS (DigitalOcean, AWS, Hetzner), puedes usar `cloud-init.yaml` para una instalación automática.
+
+1. Abre `cloud-init.yaml` y reemplaza:
+
+   ```yaml
+   - REPLACE_WITH_YOUR_PUBLIC_SSH_KEY
+   ```
+
+   con tu clave pública (ej. contenido de `id_rsa.pub`).
+
+2. Copia todo el contenido de `cloud-init.yaml` en el campo "User Data" al crear el servidor.
 
 ## ✨ Características
 
