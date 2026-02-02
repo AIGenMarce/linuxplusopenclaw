@@ -1,0 +1,66 @@
+{
+  "gateway": {
+    "bind": "127.0.0.1",
+    "port": 3000,
+    "authentication": {
+      "enabled": true,
+      "token": "{env:GATEWAY_TOKEN}"
+    }
+  },
+  "providers": {
+    "openrouter": {
+      "apiKey": "{env:OPENROUTER_API_KEY}"
+    },
+    "google": {
+      "apiKey": "{env:GOOGLE_API_KEY}"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/z-ai/glm-4.7",
+        "fallback": "google/gemini-2.0-flash"
+      },
+      "temperature": 0.7,
+      "contextTokens": 200000
+    },
+    "social_researcher": {
+      "model": "openrouter/mistralai/mistral-7b-instruct:free",
+      "prompt": "./agents/social_researcher.md",
+      "description": "Investigador de tendencias y competencia"
+    },
+    "copywriter": {
+      "model": "openrouter/google/gemma-3-12b:free",
+      "prompt": "./agents/copywriter.md",
+      "description": "Redactor creativo para redes sociales"
+    },
+    "coder": {
+      "model": "openrouter/mistralai/devstral-2-2512:free",
+      "prompt": "./agents/coder.md",
+      "description": "Automatizador de tareas y scripts"
+    }
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowShell": false,
+    "allowFileSystem": "restricted",
+    "allowedPaths": [
+      "/home/node/.openclaw/workspace"
+    ]
+  },
+  "skills": {
+    "allowlist": [],
+    "autoInstall": false
+  },
+  "permissions": {
+    "bash": "deny",
+    "edit": "ask",
+    "read": "allow",
+    "write": "ask",
+    "webfetch": "allow"
+  },
+  "security": {
+    "treatExternalInputAsHostile": true,
+    "logAllActions": true
+  }
+}

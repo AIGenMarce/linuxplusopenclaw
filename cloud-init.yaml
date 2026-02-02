@@ -1,0 +1,44 @@
+#cloud-config
+
+name: openclaw-node
+
+users:
+  - name: openclaw
+    gecos: OpenClaw Administrator
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    groups: docker
+    lock_passwd: true
+    ssh_authorized_keys:
+      - REPLACE_WITH_YOUR_PUBLIC_SSH_KEY
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - docker.io
+  - docker-compose-v2
+  - git
+  - curl
+  - ufw
+  - fail2ban
+  - unattended-upgrades
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-openclaw-hardening.conf
+    permissions: '0644'
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      PubkeyAuthentication yes
+      ChallengeResponseAuthentication no
+
+runcmd:
+  - systemctl enable --now docker
+  - ufw allow OpenSSH
+  - ufw allow 80/tcp
+  - ufw allow 443/tcp
+  - ufw --force enable
+  - systemctl link /etc/fail2ban/jail.conf
+  - systemctl enable --now fail2ban
+  - systemctl restart sshd

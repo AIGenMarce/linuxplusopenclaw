@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  openclaw:
+    image: node:22-slim
+    container_name: openclaw-agent
+    restart: unless-stopped
+    user: "1000:1000"
+    working_dir: /app
+    
+    # Run OpenClaw
+    command: >
+      sh -c "npm install -g openclaw@latest && 
+             openclaw run --config /app/config/openclaw.json"
+    
+    # Mount configuration and persistence
+    volumes:
+      - ./config:/app/config:ro
+      - ./agents:/app/agents:ro
+      - openclaw_data:/home/node/.openclaw
+    
+    # Feed API keys from .env
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GATEWAY_TOKEN=${GATEWAY_TOKEN}
+      - NODE_ENV=production
+    
+    # HARDENING: Drop all caps, add only what's needed for basic ops
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    
+    # Isolate network (bridge mode, no host access)
+    networks:
+      - openclaw_net
+
+networks:
+  openclaw_net:
+    driver: bridge
+
+volumes:
+  openclaw_data:
