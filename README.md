@@ -44,7 +44,7 @@ Si estás creando un nuevo VPS (DigitalOcean, AWS, Hetzner), puedes usar `cloud-
   - Fail2Ban protege contra ataques de fuerza bruta.
   - Docker container corre sin privilegios root.
 - **Stack de IA Optimizado**:
-  - GLM-4.7 + Gemini 2.0 Flash.
+  - GLM-4.7 + Gemini 2.5 Flash.
 - **Sub-Agentes Incluidos**:
   - 🕵️ **Social Researcher**
   - ✍️ **Copywriter**
